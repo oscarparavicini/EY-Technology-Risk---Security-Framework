@@ -123,6 +123,15 @@ st.markdown("""
     border: 1px solid #d0d0db !important; border-radius: 4px !important; background: #ffffff !important;
   }
 
+  /* Help button — blue for visibility */
+  button[data-testid="stTooltipHoverTarget"] svg {
+    fill: #2E75B6 !important;
+  }
+  button[data-testid="stTooltipHoverTarget"] {
+    color: #2E75B6 !important;
+    border-color: #2E75B6 !important;
+  }
+
   hr { border: none; border-top: 1px solid #e0e0eb; margin: 16px 0; }
   #MainMenu { visibility: hidden; } footer { visibility: hidden; } header { visibility: hidden; }
 </style>
@@ -342,7 +351,7 @@ CONDITIONAL = [
          frequency="Continuous (collection) + Monthly (review)", who="Mixed",
          contractual="Security annex: logging and retention obligations; right to receive log summaries or alerts; right to access logs for investigation purposes; audit right for log coverage.",
          escalation="If log coverage below 100%: identify uncovered systems; require remediation within 30 days; implement compensating monitoring in the interim; formally document residual risk if not fully remediated.",
-         flags=dict(C=1,I=1,A=0,Ay=0,No=0,NP=0,Su=0,Pr=1,CB=0,Re=1,AS=1,CO=0)),
+         flags=dict(C=0,I=0,A=0,Ay=1,No=1,NP=1,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="LOG_MON-02", domain="LOG_MON",
          name="Client SIEM integration & telemetry visibility",
          objective="Verify that provider security events are visible to the client \u2014 through direct SIEM integration or structured event reporting \u2014 enabling independent verification beyond provider-reported information.",
@@ -351,7 +360,7 @@ CONDITIONAL = [
          frequency="Continuous", who="Client or Mixed",
          contractual="Security annex: log feed or event reporting obligation; right to receive structured security event summaries; SIEM integration requirement for critical services; alert notification SLA.",
          escalation="If no SIEM integration AND no structured event reporting: require alternative compensating monitoring immediately. If SIEM alerts not acknowledged within SLA: open incident.",
-         flags=dict(C=1,I=1,A=0,Ay=0,No=1,NP=1,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=0,I=0,A=0,Ay=0,No=1,NP=1,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="LOG_MON-03", domain="LOG_MON",
          name="Security event detection beyond availability monitoring",
          objective="Verify that security monitoring covers events beyond availability \u2014 detecting data exfiltration, privilege abuse, and system integrity changes within the outsourced service.",
@@ -360,7 +369,7 @@ CONDITIONAL = [
          frequency="Continuous (detection) + Monthly (summary report)", who="Provider or Mixed",
          contractual="Security annex: detection and alerting obligations beyond availability; right to request use-case catalogue; notification SLA for C/I security events (suggested \u2264 4h for critical).",
          escalation="If monitoring covers availability only: require provider to extend scope; interim compensating control: client-side DLP and access monitoring. Escalate if not remediated within 60 days.",
-         flags=dict(C=1,I=1,A=0,Ay=0,No=1,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=0,I=0,A=0,Ay=1,No=1,NP=1,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="LOG_MON-04", domain="LOG_MON",
          name="SIEM operational coverage & SOC coherence",
          objective="Verify that the provider's SIEM is backed by an operational SOC \u2014 ensuring security events are not only collected but actively monitored, triaged, and responded to. A SIEM without a SOC is a detection tool with no action behind it.",
@@ -369,7 +378,7 @@ CONDITIONAL = [
          frequency="Continuous (SIEM) + Monthly (SOC summary)", who="Provider",
          contractual="Security annex: SOC coverage obligation (hours and scope); MTTA SLA for critical alerts; monthly SOC summary delivery obligation; right to verify SOC scope covers in-scope service.\nRegulatory basis: FINMA Circ. 2023/1 cyber risk management \u2014 detection capability requires both tooling AND operational response.",
          escalation="If SOC coverage does not include in-scope service: require scope extension or activate client-side SIEM compensating controls immediately.\nIf MTTA consistently exceeds SLA: require service improvement plan; escalate to risk committee if unresolved after 30 days.",
-         flags=dict(C=1,I=1,A=1,Ay=0,No=1,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=0,I=0,A=0,Ay=0,No=1,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="VULN_PATCH-01", domain="VULN_PATCH",
          name="Vulnerability scanning cadence and remediation SLAs",
          objective="Verify that the provider identifies vulnerabilities in in-scope systems and remediates them within defined timelines \u2014 with evidence that patching is effective and not solely self-reported.",
@@ -378,7 +387,7 @@ CONDITIONAL = [
          frequency="Monthly (critical) / Quarterly (other)", who="Provider + Independent auditor where possible",
          contractual="Security annex: patch remediation timelines by severity (reference DORA/EBA if applicable); regular vulnerability reporting obligation; right to request scan results or attestations; audit rights.",
          escalation="Critical vuln exceeds 15-day SLA: immediate escalation to security officer; require exception with formal risk acceptance; track daily. Consider service restrictions for critical data if unpatched beyond 30 days.",
-         flags=dict(C=1,I=1,A=1,Ay=0,No=1,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=1,I=0,A=0,Ay=0,No=0,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="VULN_PATCH-02", domain="VULN_PATCH",
          name="Secure configuration / hardening compliance",
          objective="Verify that in-scope systems are configured to a documented security baseline (e.g. CIS Benchmark Level 1 or equivalent) \u2014 with deviations tracked and approved.",
@@ -387,7 +396,7 @@ CONDITIONAL = [
          frequency="Monthly (critical) / Quarterly (other)", who="Provider or Mixed",
          contractual="Security annex: hardening baseline requirement (reference CIS L1 or equivalent); obligation to report deviations within agreed timeline; right to request compliance evidence; audit rights.",
          escalation="If compliance below 95%: require remediation plan with timeline. If critical system deviations: escalate to security officer. Accept residual risk formally if remediation delayed beyond 30 days.",
-         flags=dict(C=1,I=1,A=1,Ay=0,No=1,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=1,I=0,A=0,Ay=0,No=0,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="CHG_CONF-01", domain="CHG_CONF",
          name="Change management with security impact assessment",
          objective="Verify that changes impacting outsourced services follow a controlled approval process \u2014 with client notification for significant changes and security impact assessed before deployment.",
@@ -396,7 +405,7 @@ CONDITIONAL = [
          frequency="Monthly (change log review) + On event (significant change)", who="Mixed",
          contractual="Change notification window (suggest: 5 business days for significant changes, 2 days for mandatory); security impact assessment requirement; rollback obligation for failed changes; emergency change notification within 24h.",
          escalation="If significant change deployed without client notification: treat as unauthorized change; require post-change review; escalate if pattern detected; consider restricting change rights.",
-         flags=dict(C=1,I=1,A=1,Ay=0,No=0,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=1,I=0,A=0,Ay=0,No=0,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="CHG_CONF-02", domain="CHG_CONF",
          name="Configuration integrity monitoring",
          objective="Verify that configuration baselines for in-scope systems are maintained and monitored \u2014 detecting and investigating unauthorized or unexpected configuration changes.",
@@ -405,7 +414,7 @@ CONDITIONAL = [
          frequency="Quarterly or Continuous (where available)", who="Provider or Mixed",
          contractual="Security annex: configuration baseline obligation; change notification requirement; right to request configuration compliance evidence; audit rights for configuration management.",
          escalation="If unauthorized configuration changes detected: treat as potential security incident; escalate to security team; investigate within 24 hours; require root cause analysis and remediation plan.",
-         flags=dict(C=1,I=1,A=1,Ay=0,No=1,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
+         flags=dict(C=1,I=0,A=0,Ay=0,No=0,NP=0,Su=0,Pr=1,CB=0,Re=0,AS=1,CO=0)),
     dict(id="NET_SEG-01", domain="NET_SEG",
          name="Secure connectivity & segmentation controls",
          objective="Verify that network connections between client and provider are appropriately segmented, minimal, and monitored \u2014 preventing unauthorized lateral movement or data leakage through network paths.",
@@ -558,14 +567,25 @@ def _render_field(label, text):
 # ──────────────────────────────────────────────────────────────────
 #  LOGIC
 # ──────────────────────────────────────────────────────────────────
+# LOG_MON controls that require a monitoring channel for NoneOnly/NoneOrProv triggers
+LOG_MON_CHANNEL_CTRLS = {"LOG_MON-01", "LOG_MON-02", "LOG_MON-03", "LOG_MON-04"}
+
 def is_required(ctrl, inp):
     f = ctrl["flags"]
+    ctrl_id = ctrl["id"]
+    has_channel = (inp["scope"] == "Application access" or inp["priv"] == "Yes")
+
     if f["C"]  and inp["C"]        == "Yes":                                    return True
     if f["I"]  and inp["I"]        == "Yes":                                    return True
     if f["A"]  and inp["A"]        == "Yes":                                    return True
     if f["Ay"] and inp["assurance"]== "Yes":                                    return True
-    if f["No"] and inp["assurance"]== "No":                                     return True
-    if f["NP"] and inp["assurance"] in ("No", "Provider-only"):                 return True
+    # LOG_MON NoneOnly/NoneOrProv require a monitoring channel
+    if ctrl_id in LOG_MON_CHANNEL_CTRLS:
+        if f["No"] and inp["assurance"] == "No"                              and has_channel: return True
+        if f["NP"] and inp["assurance"] in ("No", "Provider-only")          and has_channel: return True
+    else:
+        if f["No"] and inp["assurance"]== "No":                                 return True
+        if f["NP"] and inp["assurance"] in ("No", "Provider-only"):             return True
     if f["Su"] and inp["sub"]      == "Yes":                                    return True
     if f["Pr"] and inp["priv"]     == "Yes":                                    return True
     if f["CB"] and inp["cross"]    == "Yes" and inp["C"] == "Yes":              return True
@@ -743,6 +763,9 @@ for k, v in DEFAULTS.items():
 # Track whether first assessment has been submitted
 if "inputs_submitted" not in st.session_state:
     st.session_state["inputs_submitted"] = False
+# Domain filter for dynamic chart
+if "domain_filter" not in st.session_state:
+    st.session_state["domain_filter"] = None
 
 # ──────────────────────────────────────────────────────────────────
 #  CONFIGURE ASSESSMENT DIALOG
@@ -846,9 +869,7 @@ def open_config_dialog():
                 unsafe_allow_html=True
             )
 
-        st.markdown('<div class="section-title">Regulatory</div>', unsafe_allow_html=True)
-        new_reg = sel("Regulatory constraints? *", BLANK_YN, "inp_reg",
-            "Yes if subject to FINMA Circ. 2018/3, nDSG, MiFID II, PSD2, or other regulation.")
+
 
     st.markdown("<div style='margin-top:8px;'></div>", unsafe_allow_html=True)
     st.markdown('<hr style="border-color:#e0e0eb;">', unsafe_allow_html=True)
@@ -1286,7 +1307,21 @@ with tab1:
         font_color="#2e2e38", showlegend=False,
         height=300, margin=dict(t=40, b=10, l=10, r=10),
     )
-    st.plotly_chart(fig_donut, use_container_width=True)
+    # Make chart clickable for domain filtering
+    chart_event = st.plotly_chart(fig_donut, use_container_width=True, on_select="rerun", key="donut_chart")
+    if chart_event and chart_event.get("selection") and chart_event["selection"].get("points"):
+        pt = chart_event["selection"]["points"][0]
+        clicked_label = pt.get("label", "")
+        if clicked_label and clicked_label != "N/A (30 controls)":
+            # Map label back to domain
+            label_to_domain = {v[0]: k for k, v in DOMAIN_META.items()}
+            clicked_domain = label_to_domain.get(clicked_label.split(" (")[0])
+            if clicked_domain:
+                if st.session_state["domain_filter"] == clicked_domain:
+                    st.session_state["domain_filter"] = None  # toggle off
+                else:
+                    st.session_state["domain_filter"] = clicked_domain
+                st.rerun()
 
     domain_counts = defaultdict(lambda: {"Required": 0, "N/A": 0})
     for r in results:
@@ -1420,15 +1455,35 @@ with tab2:
                     _render_field("Monitoring Objective", ctrl["objective"])
                     _render_field("Suggested Indicators", ctrl["indicators"])
                     _render_field("Evidence Examples", ctrl["evidence"])
-                    col_f, col_w = st.columns(2)
+                    col_f, col_w, col_ref = st.columns(3)
                     with col_f:
                         st.markdown(f"**Frequency:** {ctrl['frequency']}")
                     with col_w:
-                        st.markdown(f"**Produced by:** {ctrl['who']}")
-                    with st.expander("Contractual levers"):
-                        _render_field("", ctrl["contractual"])
-                    with st.expander("Escalation & Remediation"):
-                        _render_field("", ctrl["escalation"])
+                        st.markdown(f"**Owner:** {ctrl['who']}")
+                    with col_ref:
+                        st.markdown(f"**FINMA Ref:** {ctrl.get('finma_ref', 'Rz 20')}")
+                    if ctrl.get('risk_impact'):
+                        st.markdown(
+                            f'<div style="background:#fff8cc;border-left:3px solid #ffe600;padding:8px 12px;'
+                            f'border-radius:3px;font-size:.78rem;color:#2e2e38;margin:8px 0;">'
+                            f'<strong>Risk if missing:</strong> {ctrl["risk_impact"]}</div>',
+                            unsafe_allow_html=True
+                        )
+                    if ctrl.get('isae_coverage'):
+                        isae_color = {"Yes": "#e6f6f5", "Partial": "#fff8cc", "No": "#f0f0f5"}
+                        isae_text_color = {"Yes": "#00614f", "Partial": "#7a5c00", "No": "#6e6e79"}
+                        cov = ctrl["isae_coverage"]
+                        st.markdown(
+                            f'<div style="background:{isae_color.get(cov,"#f0f0f5")};display:inline-block;'
+                            f'border-radius:3px;padding:2px 9px;font-size:.68rem;font-weight:700;'
+                            f'color:{isae_text_color.get(cov,"#6e6e79")};margin-bottom:6px;">'
+                            f'ISAE Coverage: {cov}</div>',
+                            unsafe_allow_html=True
+                        )
+                    with st.expander("Contractual Levers & Escalation / Remediation"):
+                        _render_field("Contractual Levers", ctrl["contractual"])
+                        st.markdown("---")
+                        _render_field("Escalation & Remediation", ctrl["escalation"])
 
 # ══════════════════════════════════════════════
 #  TAB 3 — CONDITIONAL CONTROLS (full details)
@@ -1475,15 +1530,35 @@ with tab3:
                         _render_field("Monitoring Objective", ctrl["objective"])
                         _render_field("Suggested Indicators", ctrl["indicators"])
                         _render_field("Evidence Examples", ctrl["evidence"])
-                        col_f, col_w = st.columns(2)
+                        col_f, col_w, col_ref = st.columns(3)
                         with col_f:
                             st.markdown(f"**Frequency:** {ctrl['frequency']}")
                         with col_w:
-                            st.markdown(f"**Produced by:** {ctrl['who']}")
-                        with st.expander("Contractual levers"):
-                            _render_field("", ctrl["contractual"])
-                        with st.expander("Escalation & Remediation"):
-                            _render_field("", ctrl["escalation"])
+                            st.markdown(f"**Owner:** {ctrl['who']}")
+                        with col_ref:
+                            st.markdown(f"**FINMA Ref:** {ctrl.get('finma_ref', 'Rz 20')}")
+                        if ctrl.get('risk_impact'):
+                            st.markdown(
+                                f'<div style="background:#fff8cc;border-left:3px solid #ffe600;padding:8px 12px;'
+                                f'border-radius:3px;font-size:.78rem;color:#2e2e38;margin:8px 0;">'
+                                f'<strong>Risk if missing:</strong> {ctrl["risk_impact"]}</div>',
+                                unsafe_allow_html=True
+                            )
+                        if ctrl.get('isae_coverage'):
+                            isae_color = {"Yes": "#e6f6f5", "Partial": "#fff8cc", "No": "#f0f0f5"}
+                            isae_text_color = {"Yes": "#00614f", "Partial": "#7a5c00", "No": "#6e6e79"}
+                            cov = ctrl["isae_coverage"]
+                            st.markdown(
+                                f'<div style="background:{isae_color.get(cov,"#f0f0f5")};display:inline-block;'
+                                f'border-radius:3px;padding:2px 9px;font-size:.68rem;font-weight:700;'
+                                f'color:{isae_text_color.get(cov,"#6e6e79")};margin-bottom:6px;">'
+                                f'ISAE Coverage: {cov}</div>',
+                                unsafe_allow_html=True
+                            )
+                        with st.expander("Contractual Levers & Escalation / Remediation"):
+                            _render_field("Contractual Levers", ctrl["contractual"])
+                            st.markdown("---")
+                            _render_field("Escalation & Remediation", ctrl["escalation"])
 
 # ══════════════════════════════════════════════
 #  TAB 4 — GAP TRACKER
@@ -1501,7 +1576,7 @@ with tab4:
     n_tracker_total  = len(all_tracker_ctrls)
     n_tracker_yes    = sum(1 for c in all_tracker_ctrls if get_impl(c["id"]) == "Yes")
     n_tracker_no     = sum(1 for c in all_tracker_ctrls if get_impl(c["id"]) == "No")
-    n_tracker_unsure = sum(1 for c in all_tracker_ctrls if get_impl(c["id"]) == "Not assessed")
+    n_tracker_unsure = sum(1 for c in all_tracker_ctrls if get_impl(c["id"]) not in ["Yes", "No"])
     all_assessed     = (n_tracker_unsure == 0)
 
     g1, g2, g3, g4 = st.columns(4)
@@ -1515,9 +1590,8 @@ with tab4:
         '<div style="background:#fff8cc;border:1px solid #ffe066;border-radius:4px;'
         'padding:14px 16px;margin-bottom:16px;font-size:.82rem;color:#7a5c00;line-height:1.6;">'
         '<strong>How to complete this step:</strong><br>'
-        'For each control below, review the full monitoring details available in the '
-        '<strong>Always Required Controls</strong> and <strong>Conditional Controls</strong> tabs — '
-        'these list the exact indicators to check, evidence to request, and frequency expected.<br><br>'
+        'For each control below, click <strong>View monitoring details</strong> to see the monitoring objective, '
+        'indicators to verify, and evidence to request — all directly inline without switching tabs.<br><br>'
         'Then assess the evidence you have received or currently hold from your provider. '
         'Based on that review, mark each control <strong>Yes</strong> (the control is implemented and '
         'evidence is available to support it) or <strong>No</strong> (the control is missing, '
