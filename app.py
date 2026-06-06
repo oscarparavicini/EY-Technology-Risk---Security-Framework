@@ -818,7 +818,7 @@ def open_config_dialog():
 
         st.markdown('<div class="section-title">Subcontractors</div>', unsafe_allow_html=True)
         new_sub = sel("Subcontractors involved? *", BLANK_YN, "inp_sub",
-            "Yes = provider delegates part of the service to sub-processors or subcontractors (e.g. cloud hosting, "
+            "Yes = provider delegates part of the service to subcontractors (e.g. cloud hosting, "
             "data centres, specialised processing). Check the provider's data processing agreement for the sub-processor list.")
 
     with col2:
