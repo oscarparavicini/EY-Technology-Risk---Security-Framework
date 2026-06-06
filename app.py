@@ -124,18 +124,13 @@ st.markdown("""
   }
 
   /* Help button — blue for visibility */
-  button[data-testid="stTooltipHoverTarget"] svg {
-    fill: #2E75B6 !important;
-  }
-  button[data-testid="stTooltipHoverTarget"] {
-    color: #2E75B6 !important;
-    border-color: #2E75B6 !important;
-  }
-
-  hr { border: none; border-top: 1px solid #e0e0eb; margin: 16px 0; }
-  #MainMenu { visibility: hidden; } footer { visibility: hidden; } header { visibility: hidden; }
-</style>
-""", unsafe_allow_html=True)
+button[data-testid="stTooltipHoverTarget"] svg {
+    fill: #0070c0 !important;
+}
+button[data-testid="stTooltipHoverTarget"] {
+    color: #0070c0 !important;
+    border-color: #0070c0 !important;
+}
 
 # ──────────────────────────────────────────────────────────────────
 #  DOMAIN METADATA  (icon removed — no emojis)
